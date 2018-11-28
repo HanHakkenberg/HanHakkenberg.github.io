@@ -18,8 +18,8 @@
 			<section id="One" class="wrapper style3">
 				<div class="inner">
 					<header class="align-center">
-						<p>Made in 2017</p>
-						<h2>Gates Of Glory</h2>
+						<p>Made in 2018</p>
+						<h2>Global Game Jam 2018</h2>
 					</header>
 				</div>
 			</section>
@@ -37,186 +37,61 @@
 ">
 					<div class="box" style="
     width: 100%;
-    height: 4600px;
+    height: 1000px;
     margin-bottom: 0px;
     padding-left: 10px;
 ">
 						
-					<a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Gates%20Of%20Glory" class="icon fa-Github" style="
+					<a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Global%20Game%20Jam%202018" class="icon fa-Github" style="
     right: 250px;
-    left: 30%;
+    left: 45%;
     top: 25px;
     padding-bottom: 75px;
-">. https://github.com/HanHakkenberg/Portfolio/tree/master/Gates%20Of%20Glory<span class="label">Github</span><h2 style="
+">. Project Link<span class="label">Github</span><h2 style="
     width: 0px;
     margin-bottom: 0px;
     padding-right: 10px;
 "></h2></a><p style="
     padding-top: 75px;
-"><span class="image left"><img src="images/Slide02.jpg" alt="" style="
+"><span class="image left" style="
+    top: 40px;
+    margin-bottom: 25px;
+"><img src="images/Slide01.jpg" alt="" style="
     width: 350px;
-"></span>Gates Of Glory is a castle defense game in which you have to defend against waves. These waves are endless and keep getting harder every wave. After certain waves there will be men enemies introduces these will have different stats. You can also place traps which will slow down enemies or damage them. The enemies will try to get to the throne in the middle they will first have to pass a gate. The gate can be open by the player or be broken. After the gate the enemy will have to take all the gold before breaking the throne this can create interesting end game tactics. You as player can also make rooms that can help you there is a minion room to spawn your allies a healing room to heal your allies a damage room to damage the enemies and a barrage room to do lots of damage in 
-a specific part of that map. The Ontario will collect data so you can see how match you have made spend etc. And the generator will heal the health of your gate over time.</p>
+"></span></p><h3>The Game</h3>The Global Game Jam Game is a still unnamed game made for the Global Game Jam 2018. The game has been mad in 48 hours by 2 developers and 2 hybrids. In the game you play as a bat which thries to get a letter filled with food to his baby bats. To do this he will have to move trough a cave with a multitude of trabs and obstacles. These trabs are invisible and will only be revealed when the player hits them with his sonic sound waves. When the player gets hit he wil lose a life depending on the dificulty the player can have 1,3,5 sets of lives. At the end of the first and only level the player will have to face a boss.<p></p>
 <p style="
     padding-left: 10px;
-"><span class="image right"><img src="images/Gates of Glory/GOG_012.jpg" alt=""></span>The project was made in 10 weeks by two developers and two artists. I was responsible for the AI, Wave system and the gate and throne. The enemies each have have their own speed that gets randomized slightly when they spawn to create variation. The height and pitch for the audio of the battle cry is randomized slightly. The enemies and allies use collision to detect if they are in reach of an enemy or gate. The gate can be closed and opened at will unless it's broken in that case it will stay open. Your allies will attack the enemy closest to the throne if there are no enemies or all enemies already hit their cap of how many allies they can fight at once the ally will go to the outside of the closest gate to wait for new enemies.</p>
-<p style="
-    padding-left: 10px;
-    padding-top: 75px;
-    padding-bottom: 50px;
-"><h3>What would I do different?</h3>What I would do differently:  I would use inheritress properly. I would change the way the soldiers currently detect where they have to go. I would make it so based on its position it could see if it falls in the areas meet for a damageable. This also lessons the need for codependent sense the damageable data and location can be stored in a singleton. I would also make the enemies walk along 3 or more strait paths instead of using pathfinder this would make it less demanding.</p><pre style="
-    margin-bottom: 0px;
-    padding-left: 10px;
     padding-top: 20px;
-"><h3>Damagebles</h3>This is from the damagebles Class This is the base class for all the damageble thing like the enemies allies but also the gates and the throne.<code>    public Stats myStats;
-
-    public virtual void TakeDamage(float damage){
-        myStats.health.currentValue -= damage;
-    }
-</code><p></p>
-</pre>
-
-<pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Soldier</h3>This is from the Soldier Class This class holds the bases for the movement of the AI. Movement is done using the unity navmesh.<code>    public NavMeshAgent agent;
-    public float attackCooldown;
-    public Transform targetTransform;
-    public Animator anim;
-    public bool inFight;
-    public AudioSource myAudiosource;
-
-    void Start() {
-        MyStart();
-    }
-
-    public virtual void MyStart() {
-        if(agent != null) {
-            agent.speed = Random.Range(1.75f, 2.25f);
-        }
-        myAudiosource.pitch = Random.Range(0.75f, 1.25f);
-        myAudiosource.volume = Random.Range(0.01f, 0.08f);
-        transform.localScale *= Random.Range(0.9f, 1.1f);
-    }
-
-    public override void TakeDamage(float damage) {
-    }
-</code><p></p></pre><pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Knight</h3>This is part of the class used for the knight later we desided to at a roman like soldier this enemy uses this script aswell.<code>    void OnTriggerEnter(Collider other)
-    {
-        if(targetTransform != null &amp;&amp; targetTransform == other.transform) {
-            targetTransform.gameObject.GetComponent&lt;Enemy&gt;().StartBattle(this);
-            anim.SetBool("Attack", true);
-            anim.SetBool("Idle", false);
-            inFight = true;
-            agent.isStopped = true;
-            StopAllCoroutines();
-            StartCoroutine(Attack());
-        }
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform == targetTransform)
-        {
-            agent.isStopped = true;
-            if(transform.position.x &gt; 0) {
-                transform.localEulerAngles = new Vector3(0,90,0);
-            }
-            else {
-                transform.localEulerAngles = new Vector3(0, -90, 0);
-            }
-            anim.SetBool("Idle", true);
-        }
-    }
-</code><p></p></pre><pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Enemy Knight</h3>This is part of the class used for the Enemyknight.<code>    public override void TakeDamage(float damage) {
-        myStats.health.currentValue -= damage;
-
-        if(myStats.health.currentValue &lt;= 0) {
-            StopAllCoroutines();
-            ObjectPooler.instance.AddToPool("Enemy Knight", gameObject);
-            ResourceManager.instance.AddGold(ResourceManager.instance.normalEnemyGoldReward);
-        }
-    }
-
-    void OnCollisionEnter(Collision collision) {
-        if(collision.transform == targetTransform) {
-            StartBattle(target);
-            if(targetTransform.tag == "Defense") {
-                targetTransform.GetComponent&lt;CastleDeffensePoint&gt;().attackingMe.Add(this);
-            }
-            agent.isStopped = true;
-            attackingCastle = true;
-            target = collision.gameObject.GetComponent&lt;Damagebles&gt;();
-        }
-    }
-
-    void OnTriggerExit(Collider other) {
-        if(targetTransform != null &amp;&amp; targetTransform.gameObject.activeSelf == false) {
-            targetTransform = null;
-            StopBattle();
-            FindNewTarget();
-        }
-    }
-</code><p></p></pre><pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Gate</h3>This is part of the class used for the Gate.<code>    public virtual void DirectDamage(float damage) {
-        TakeDamage(damage);
-    }
-
-    public override void TakeDamage(float damage){
-        myStats.health.currentValue -= damage;
-
-        if (healthbarFill != null)
-        {
-            healthbarFill.fillAmount = (myStats.health.currentValue / myStats.health.baseValue);
-        }
-    }
-</code><p></p></pre><pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Throne</h3>This is part of the class used for the Throne.<code>    public override void TakeDamage(float damage) {
-        if(ResourceManager.instance.goldPrefabsInScene.Count &gt; 0) {
-            ResourceManager.instance.RemoveGold(1, false);
-        }
-        else {
-            damage = Mathf.Abs(ResourceManager.instance.goldPrefabsInScene.Count - Mathf.RoundToInt(damage / 10));
-            ResourceManager.instance.RemoveGold(ResourceManager.instance.goldPrefabsInScene.Count, false);
-            myStats.health.currentValue -= damage;
-            myStats.health.currentValue -= damage;
-            HPBar();
-
-            if(healthbarFill != null) {
-                healthbarFill.fillAmount = (myStats.health.currentValue / myStats.health.baseValue);
-
-                if(secondThroneHealthBarFill != null) {
-                    secondThroneHealthBarFill.fillAmount = (myStats.health.currentValue / myStats.health.baseValue);
-                }
-            }
-
-            if(myStats.health.currentValue &lt;= 0) {
-                if(GameManager.instance.gameState == GameManager.GameState.Playing) {
-                    StartCoroutine(UIManager.instance.GameOver());
-                }
-            }
-        }
-    }
-</code><p></p></pre><a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Gates%20Of%20Glory" class="icon fa-Github" style="
+    margin-bottom: 100px;
+"><span class="image right" style="
+    top: 25px;
+    left: -50;
+"><img src="images\GameJamScreenShots\5.jpg" alt="" style="
+    width: 450px;
+"></span><span class="image right" style="
+    top: 25px;
+    width: 500px;
+    height: 400px;
+"><img src="images\GameJamScreenShots\9.jpg" alt="" style="
+    width: 450px;
+"></span></p><h3>My Contribution</h3><p>In the game we all colaborated with programming as well as 2D art. This was nessesery because of the limited time frame.</p>
+<a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Global%20Game%20Jam%202018" class="icon fa-Github" style="
     right: 250px;
-    left: 30%;
+    left: 45%;
     top: 50px;
-">. https://github.com/HanHakkenberg/Portfolio/tree/master/Gates%20Of%20Glory<span class="label">Github</span><h2 style="
+">. Project Link<span class="label">Github</span><h2 style="
     width: 0px;
     margin-bottom: 0px;
     padding-right: 10px;
-"></h2></a>
+"></h2></a><p style="
+    padding-left: 10px;
+    padding-top: 75px;
+    padding-bottom: 50px;
+"></p><p></p>
+
+
 </div>
+
 				</div>
 			</section>
 
@@ -237,4 +112,4 @@ a specific part of that map. The Ontario will collect data so you can see how ma
 					<li><a href="generic.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Generic</a></li>
 					<li><a href="elements.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Elements</a></li>
 				</ul>
-			<a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a></nav></body></html>
+			<a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a></nav></body></html>gay

@@ -1,0 +1,218 @@
+<html><head>
+		<title>Hielo by TEMPLATED</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="assets/css/main.css">
+	</head>
+	<body class="subpage" style="
+    padding-top: 0px;
+">
+
+		<!-- Header -->
+			
+
+		<!-- Nav -->
+			
+
+		<!-- One -->
+			<section id="One" class="wrapper style3">
+				<div class="inner">
+					<header class="align-center">
+						<p>Made in 2016</p>
+						<h2>Cleptomaniac</h2>
+					</header>
+				</div>
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="wrapper style2" style="
+    padding-top: 0px;
+">
+				<div class="inner" style="
+    margin-left: 0px;
+    margin-right: 0px;
+    width: 100%;
+    height: 100%;
+    padding-top: 0px;
+">
+					<div class="box" style="
+    width: 100%;
+    height: 3900px;
+    margin-bottom: 0px;
+    padding-left: 10px;
+">
+						
+					<a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Cleptomaniac" class="icon fa-Github" style="
+    right: 250px;
+    left: 45%;
+    top: 25px;
+    padding-bottom: 75px;
+">. Project Link<span class="label">Github</span><h2 style="
+    width: 0px;
+    margin-bottom: 0px;
+    padding-right: 10px;
+"></h2></a><p style="
+    padding-top: 75px;
+"><span class="image left" style="
+    top: 40px;
+    margin-bottom: 50px;
+"><img src="images/Slide03.jpg" alt="" style="
+    width: 350px;
+"></span></p><h3>The Game</h3>Cleptomaniac is a game where you play as a robber. In the game you will have to steal items and sell them to win. You have five days to get to get the amount of money you need to get. This amount differentiates depending on the difficulty. While doing this you will have to watch out that no one is looking at you. You can be spotted by pedestrians cameras and cops. When seen while stealing the caps will run after you forcing you to use donuts to distract them temporally or you can get top the dealer. The dealer is where you can sell your goods for that day. different items are worth differently. In the shop you can buy things like speedBoost, jumpBoost, more stamina and donuts. After the five days if you don't have enough money you lose.<p></p>
+<p style="
+    padding-left: 10px;
+    padding-top: 20px;
+"><span class="image right" style="
+    top: 25px;
+"><img src="images/clep/screenshot (17).jpg" alt=""></span></p><h3>My Contribution</h3>This project was made in the last quarter of the first school year. It was made by two programmers and one artist. I was responsible for one character one building and the AI, car AI and camera's. The character that I made was the cop. The building that I made was the bank and the pickups in the safe. The building is modular and we chose for solid colors. For the AI I used the unity navmesh. The AI will follow a path set by waypoint. The cops will leave this path when the player steals something. They will run straight at the player and arrest him unless he uses a donut. The cars also drive a set path and when colliding with the player the player loses for that day. To check if people or the camera is looking at you I used a raycast. I first check if the player is in front of the person and then using transform.lookat I shoot a raycast at the player if it hits I check if it falls within the angle that the player can look.<p></p>
+<p style="
+    padding-left: 10px;
+    padding-top: 75px;
+    padding-bottom: 0px;
+"></p><h3>What would I do different?</h3>What I would do differently: I would not use the navmesh system to make the AI walk A predetermined path because it's a waste of resources. I would also make it so there is more than one raycast so when your behind a small object you can still be spotted. Most of all I would clean up all my scripts since when I made this I didn't do that very well. As for modeling I would make the bank so the pieces fit together better.<p></p><pre style="
+    margin-bottom: 0px;
+    padding-left: 10px;
+    padding-top: 20px;
+"><h3>PedestrianAI</h3>This is from the PedestrianAI Class currently all Ai related things are in the Update. At the time of making this I wasn't very good at cleaning up my scripts.<code>    void Update() {
+        if(aim.looking == true) {
+            StealNoticeVoid();
+        }
+        if(Physics.Raycast(transform.position,transform.forward,out rayHit,10) &amp;&amp; rayHit.collider.gameObject.tag == doorTag || Physics.Raycast(transform.position,transform.forward,out rayHit,2) &amp;&amp; rayHit.collider.gameObject.tag == carTag) {
+            if(rayHit.collider.gameObject.tag == doorTag) {
+                rayHit.collider.GetComponent&lt;Interactable&gt;().Interacting();
+            }
+        }
+        else if(stationary == false &amp;&amp; standStil == false) {
+            characterAnimation.SetBool("Walking",true);
+            navigator.SetDestination(checkPoints[currentCheckPoint].transform.position);
+            if(myTransform.position.z == checkPoints[currentCheckPoint].transform.position.z &amp;&amp; myTransform.position.x == checkPoints[currentCheckPoint].transform.position.x) {
+                if(currentCheckPoint == checkPoints.Count - 1) {
+                    timer = stilStandingTime;
+                    standStil = true;
+                    characterAnimation.SetBool("Walking",false);
+                }
+                else {
+                    currentCheckPoint++;
+                }
+            }
+
+        }
+        else if(standStil == true) {
+            if(timer &lt;= 0) {
+                standStil = false;
+                currentCheckPoint = 0;
+            }
+            else {
+                timer -= Time.deltaTime;
+            }
+        }
+    }
+</code><p></p>
+</pre>
+
+<pre style="
+    padding-left: 10px;
+    padding-top: 20px;
+"><h3>CarAI</h3>This is from the CarAI Class this also uses the unity navmesh to move.<code>    void Update() {
+        navigator.SetDestination(checkPoints[currentCheckPoint].transform.position);
+        Physics.Raycast(transform.position,transform.forward,out rayHit,raydistance);
+        if(Physics.Raycast(transform.position,transform.forward,out rayHit,raydistance) &amp;&amp; rayHit.collider.tag == carTag){
+        }
+        else {
+            if(myTransform.position.z &gt;= checkPoints[currentCheckPoint].transform.position.z - missingAmount &amp;&amp; myTransform.position.z &lt;= checkPoints[currentCheckPoint].transform.position.z + missingAmount &amp;&amp; myTransform.position.x &gt;= checkPoints[currentCheckPoint].transform.position.x - missingAmount &amp;&amp; myTransform.position.x &lt;= checkPoints[currentCheckPoint].transform.position.x + missingAmount) {
+                if(currentCheckPoint == checkPoints.Count - 1) {
+                    currentCheckPoint = 0;
+                }
+                else {
+                    currentCheckPoint++;
+                }
+                navigator.SetDestination(checkPoints[currentCheckPoint].transform.position);
+            }
+        }
+    }
+</code><p></p></pre><pre style="
+    padding-left: 10px;
+    padding-top: 20px;
+"><h3>Guard</h3>This is part of the Guard class this class is used to move the guards and used to make the guards attack you when you steal.<code>    void Update() {
+        if(aim.looking == true) {
+            StealNoticeVoid();
+        }
+        if(Physics.Raycast(transform.position,transform.forward,out rayHit,10) &amp;&amp; rayHit.collider.gameObject.tag == doorTag || Physics.Raycast(transform.position,transform.forward,out rayHit,2) &amp;&amp; rayHit.collider.gameObject.tag == carTag) {
+            rayHit.collider.GetComponent&lt;Interactable&gt;().Interacting();
+        }
+        else if(AIManager.wantedState == false) {
+            if(stationary == false) {
+                securityAnimator.SetBool("Walking",true);
+                securityAnimator.SetBool("Wanted",false);
+                navigator.speed = walkingSpeed;
+                navigator.SetDestination(checkPoints[currentCheckPoint].transform.position);
+                if(myTransform.position.z == checkPoints[currentCheckPoint].transform.position.z &amp;&amp; myTransform.position.x == checkPoints[currentCheckPoint].transform.position.x) {
+                    if(currentCheckPoint == checkPoints.Count - 1) {
+                        currentCheckPoint = 0;
+                    }
+                    else {
+                        currentCheckPoint++;
+                    }
+                }
+            }
+            else {
+                transform.rotation = startingPosition.rotation;
+                transform.position = startingPosition.position;
+                securityAnimator.SetBool("Walking",false);
+                securityAnimator.SetBool("Wanted",false);
+                if(Random.Range(1,100) == 2) {
+                    securityAnimator.SetBool("Tip That Hat",true);
+                    securityAnimator.SetBool("Tip That Hat",false);
+                }
+            }
+        }
+        else {
+            if(donut != null) {
+                navigator.SetDestination(donut.transform.position);
+                if(myTransform.position.z == donut.transform.position.z &amp;&amp; myTransform.position.x == donut.transform.position.x) {
+                    securityAnimator.SetBool("Walking",false);
+                    securityAnimator.SetBool("Wanted",false);
+                }
+            }
+            else {
+                navigator.speed = runningSpeed;
+                securityAnimator.SetBool("Wanted",true);
+                navigator.SetDestination(player.position);
+            }
+
+        }
+    }
+</code><p></p></pre><pre style="
+    padding-left: 10px;
+    padding-top: 20px;
+"></pre><a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Cleptomaniac" class="icon fa-Github" style="
+    right: 250px;
+    left: 45%;
+    top: 50px;
+">. Project Link<span class="label">Github</span><h2 style="
+    width: 0px;
+    margin-bottom: 0px;
+    padding-right: 10px;
+"></h2></a>
+</div>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	
+s<nav id="menu">
+				<ul class="links">
+					<li><a href="index.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Home</a></li>
+					<li><a href="generic.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Generic</a></li>
+					<li><a href="elements.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Elements</a></li>
+				</ul>
+			<a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a></nav></body></html>

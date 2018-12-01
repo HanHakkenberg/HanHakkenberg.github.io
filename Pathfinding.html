@@ -18,8 +18,8 @@
 			<section id="One" class="wrapper style3">
 				<div class="inner">
 					<header class="align-center">
-						<p>Made in 2017</p>
-						<h2>Gates Of Glory</h2>
+						<p>Made in 2016</p>
+						<h2>Pathfinding</h2>
 					</header>
 				</div>
 			</section>
@@ -37,12 +37,12 @@
 ">
 					<div class="box" style="
     width: 100%;
-    height: 4600px;
+    height: 3900px;
     margin-bottom: 0px;
     padding-left: 10px;
 ">
 						
-					<a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Gates%20Of%20Glory" class="icon fa-Github" style="
+					<a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Pathfinding" class="icon fa-Github" style="
     right: 250px;
     left: 45%;
     top: 25px;
@@ -56,164 +56,153 @@
 "><span class="image left" style="
     top: 40px;
     margin-bottom: 50px;
-"><img src="images/Slide02.jpg" alt="" style="
+"><img src="images/Slide04.jpg" alt="" style="
     width: 350px;
-"></span></p><h3>The Game</h3>Gates Of Glory is a castle defense game in which you have to defend against waves. These waves are endless and keep getting harder every wave. After certain waves there will be men enemies introduces these will have different stats. You can also place traps which will slow down enemies or damage them. The enemies will try to get to the throne in the middle they will first have to pass a gate. The gate can be open by the player or be broken. After the gate the enemy will have to take all the gold before breaking the throne this can create interesting end game tactics. You as player can also make rooms that can help you there is a minion room to spawn your allies a healing room to heal your allies a damage room to damage the enemies and a barrage room to do lots of damage in 
-a specific part of that map. The Ontario will collect data so you can see how match you have made spend etc. And the generator will heal the health of your gate over time.<p></p>
+"></span></p><h3>Introduction</h3>This is a small project that I made. This project uses the A* algorithem to find the fastes route from a to b. I see this more like a prove of my understanding of A* than anything else. To make it more intersting I made it so the villager has to get sticks and small rocks to get tools so he can cut down wood and stones to get more faster. The villager also has to eat and drink. He can eat berries taht can be gathered and drink from the well. I made his path visual with unity gizmos,.<p></p>
 <p style="
     padding-left: 10px;
     padding-top: 20px;
 "><span class="image right" style="
     top: 25px;
-"><img src="images/Gates of Glory/GOG_012.jpg" alt=""></span></p><h3>My Contribution</h3>The project was made in 10 weeks by two developers and two artists. I was responsible for the AI, Wave system and the gate and throne. The enemies each have have their own speed that gets randomized slightly when they spawn to create variation. The height and pitch for the audio of the battle cry is randomized slightly. The enemies and allies use collision to detect if they are in reach of an enemy or gate. The gate can be closed and opened at will unless it's broken in that case it will stay open. Your allies will attack the enemy closest to the throne if there are no enemies or all enemies already hit their cap of how many allies they can fight at once the ally will go to the outside of the closest gate to wait for new enemies.<p></p>
-<p style="
-    padding-left: 10px;
-    padding-top: 75px;
-    padding-bottom: 50px;
-"></p><h3>What would I do different?</h3>What I would do differently:  I would use inheritress properly. I would change the way the soldiers currently detect where they have to go. I would make it so based on its position it could see if it falls in the areas meet for a damageable. This also lessons the need for codependent sense the damageable data and location can be stored in a singleton. I would also make the enemies walk along 3 or more strait paths instead of using pathfinder this would make it less demanding.<p></p><pre style="
+"><img src="images/path/Screenshot (22).jpg" alt=""></span></p><p></p>
+<p></p><pre style="
     margin-bottom: 0px;
     padding-left: 10px;
     padding-top: 20px;
-"><h3>Damagebles</h3>This is from the damagebles Class This is the base class for all the damageble thing like the enemies allies but also the gates and the throne.<code>    public Stats myStats;
+"><h3>Damagebles</h3>This is the Node Class This class holds the data of each point.<code>public class Node{
+    public Vector3 nodeWorldPos;
+    public bool walkable;
+    public int parentNodeX, parentNodeY;
+    public int myNodeX, myNodeY;
+    public int aCost, bCost, tCost;
+    public bool Check;
 
-    public virtual void TakeDamage(float damage){
-        myStats.health.currentValue -= damage;
+    //this sets certain values when the class is made
+    public Node(Vector3 _NodeWorldPos, bool _walkable, int _myNodeX, int _myNodeY){
+        myNodeX = _myNodeX;
+        myNodeY = _myNodeY;
+        nodeWorldPos = _NodeWorldPos;
+        walkable = _walkable;
     }
+
+    //this changes the costs
+    public void ChangeCost(int _aCost, int _bCost){
+        aCost = _aCost;
+        bCost = _bCost;
+        tCost = aCost + bCost;
+    }
+
+    //this changes the parrent node of this node
+    public void ChangeParent(int _parentNodeX, int _parentNodeY){
+        parentNodeX = _parentNodeX;
+        parentNodeY = _parentNodeY;
+    }
+}
 </code><p></p>
 </pre>
 
 <pre style="
     padding-left: 10px;
     padding-top: 20px;
-"><h3>Soldier</h3>This is from the Soldier Class This class holds the bases for the movement of the AI. Movement is done using the unity navmesh.<code>    public NavMeshAgent agent;
-    public float attackCooldown;
-    public Transform targetTransform;
-    public Animator anim;
-    public bool inFight;
-    public AudioSource myAudiosource;
-
-    void Start() {
-        MyStart();
-    }
-
-    public virtual void MyStart() {
-        if(agent != null) {
-            agent.speed = Random.Range(1.75f, 2.25f);
-        }
-        myAudiosource.pitch = Random.Range(0.75f, 1.25f);
-        myAudiosource.volume = Random.Range(0.01f, 0.08f);
-        transform.localScale *= Random.Range(0.9f, 1.1f);
-    }
-
-    public override void TakeDamage(float damage) {
-    }
-</code><p></p></pre><pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Knight</h3>This is part of the class used for the knight later we desided to at a roman like soldier this enemy uses this script aswell.<code>    void OnTriggerEnter(Collider other)
-    {
-        if(targetTransform != null &amp;&amp; targetTransform == other.transform) {
-            targetTransform.gameObject.GetComponent&lt;Enemy&gt;().StartBattle(this);
-            anim.SetBool("Attack", true);
-            anim.SetBool("Idle", false);
-            inFight = true;
-            agent.isStopped = true;
-            StopAllCoroutines();
-            StartCoroutine(Attack());
-        }
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform == targetTransform)
-        {
-            agent.isStopped = true;
-            if(transform.position.x &gt; 0) {
-                transform.localEulerAngles = new Vector3(0,90,0);
+"><h3>Grid</h3>This is part of the Grid class this function gives back a node pos(the closest position of the node in world poss) when given a position.<code>    //converting the given node to a nodepos
+    public NodePos checkNode(Vector3 _nodeToCheck){
+        NodePos newPos = new NodePos(Mathf.Clamp(Mathf.RoundToInt(((_nodeToCheck.x - transform.position.x) - nodeSize / 2) / nodeSize), 1, gridSizeX - 1), Mathf.Clamp(Mathf.RoundToInt(((_nodeToCheck.z - transform.position.z) - nodeSize / 2) / nodeSize),1,gridSizeY - 1));
+        if(!grid[newPos.x,newPos.y].walkable){
+            List&lt;NodePos&gt; checkList = new List&lt;NodePos&gt;();
+            List&lt;NodePos&gt; doneList = new List&lt;NodePos&gt;();
+            checkList.Add(newPos);
+            while (checkList.Count &gt; 0){
+                for (int x = -1; x &lt; 2; x++){
+                    for (int y = -1; y &lt; 2; y++){
+                        if(!(x == 0 &amp;&amp; y == 0) &amp;&amp; checkList[0].x + x &gt; 0 &amp;&amp; checkList[0].x + x &lt; gridSizeX &amp;&amp; checkList[0].y + y &gt; 0 &amp;&amp; checkList[0].y + y &lt; gridSizeY &amp;&amp; !grid[checkList[0].x + x, checkList[0].y + y].Check){
+                            grid[checkList[0].x + x, checkList[0].y + y].Check = true;
+                            checkList.Add(new NodePos(checkList[0].x + x, checkList[0].y + y));
+                            if (grid[checkList[0].x + x, checkList[0].y + y].walkable){
+                                foreach (NodePos v in checkList){
+                                    grid[v.x, v.y].Check = false;
+                                }
+                                foreach (NodePos n in doneList){
+                                    grid[n.x, n.y].Check = false;
+                                }
+                                return (new NodePos(checkList[0].x + x, checkList[0].y + y));
+                            }
+                        }
+                    }
+                }
+                doneList.Add(checkList[0]);
+                checkList.RemoveAt(0);
             }
-            else {
-                transform.localEulerAngles = new Vector3(0, -90, 0);
-            }
-            anim.SetBool("Idle", true);
         }
+        return (newPos);
     }
 </code><p></p></pre><pre style="
     padding-left: 10px;
     padding-top: 20px;
-"><h3>Enemy Knight</h3>This is part of the class used for the Enemyknight.<code>    public override void TakeDamage(float damage) {
-        myStats.health.currentValue -= damage;
+"><h3>Grid</h3>This is part of the Grid class this geves back a vector3 list. This list is the path the AI can follow to get to thier goal.<code>    //Creating the path
+    public List&lt;Vector3&gt; MakePath(Vector3 _targetPos, Vector3 _myPos){
+        targetNode.ChangeNodePos(checkNode(_targetPos).x, checkNode(_targetPos).y);
+        myNode.ChangeNodePos(checkNode(_myPos).x, checkNode(_myPos).y);
 
-        if(myStats.health.currentValue &lt;= 0) {
-            StopAllCoroutines();
-            ObjectPooler.instance.AddToPool("Enemy Knight", gameObject);
-            ResourceManager.instance.AddGold(ResourceManager.instance.normalEnemyGoldReward);
-        }
-    }
-
-    void OnCollisionEnter(Collision collision) {
-        if(collision.transform == targetTransform) {
-            StartBattle(target);
-            if(targetTransform.tag == "Defense") {
-                targetTransform.GetComponent&lt;CastleDeffensePoint&gt;().attackingMe.Add(this);
-            }
-            agent.isStopped = true;
-            attackingCastle = true;
-            target = collision.gameObject.GetComponent&lt;Damagebles&gt;();
-        }
-    }
-
-    void OnTriggerExit(Collider other) {
-        if(targetTransform != null &amp;&amp; targetTransform.gameObject.activeSelf == false) {
-            targetTransform = null;
-            StopBattle();
-            FindNewTarget();
-        }
-    }
-</code><p></p></pre><pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Gate</h3>This is part of the class used for the Gate.<code>    public virtual void DirectDamage(float damage) {
-        TakeDamage(damage);
-    }
-
-    public override void TakeDamage(float damage){
-        myStats.health.currentValue -= damage;
-
-        if (healthbarFill != null)
-        {
-            healthbarFill.fillAmount = (myStats.health.currentValue / myStats.health.baseValue);
-        }
-    }
-</code><p></p></pre><pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Throne</h3>This is part of the class used for the Throne.<code>    public override void TakeDamage(float damage) {
-        if(ResourceManager.instance.goldPrefabsInScene.Count &gt; 0) {
-            ResourceManager.instance.RemoveGold(1, false);
-        }
-        else {
-            damage = Mathf.Abs(ResourceManager.instance.goldPrefabsInScene.Count - Mathf.RoundToInt(damage / 10));
-            ResourceManager.instance.RemoveGold(ResourceManager.instance.goldPrefabsInScene.Count, false);
-            myStats.health.currentValue -= damage;
-            myStats.health.currentValue -= damage;
-            HPBar();
-
-            if(healthbarFill != null) {
-                healthbarFill.fillAmount = (myStats.health.currentValue / myStats.health.baseValue);
-
-                if(secondThroneHealthBarFill != null) {
-                    secondThroneHealthBarFill.fillAmount = (myStats.health.currentValue / myStats.health.baseValue);
+        //Searching for path to the target
+        FindNeighbors(myNode);
+        List&lt;NodePos&gt; closeList = new List&lt;NodePos&gt;();
+        while (openList.Count &gt; 0){
+            int lowest = 0;
+            for (int i = 0; i &lt; openList.Count; i++){
+                if (grid[openList[i].x, openList[i].y].tCost &lt; grid[openList[lowest].x, openList[lowest].y].tCost){
+                    lowest = i;
                 }
             }
+            closeList.Add(openList[lowest]);
+            if (FindNeighbors(openList[lowest])){
+                break;
+            }
+            openList.RemoveAt(lowest);
+        }
 
-            if(myStats.health.currentValue &lt;= 0) {
-                if(GameManager.instance.gameState == GameManager.GameState.Playing) {
-                    StartCoroutine(UIManager.instance.GameOver());
+        //Backtracking most efficient path
+        List&lt;Vector3&gt; pathList = new List&lt;Vector3&gt;();
+        NodePos nodeToAdd = closeList[closeList.Count - 1];
+        int l = 0;
+        pathList.Add(grid[targetNode.x, targetNode.y].nodeWorldPos);
+        while (l &lt; maxTravelDistance){
+            l++;
+            if (myNode.x == nodeToAdd.x &amp;&amp; myNode.y == nodeToAdd.y){
+                gizmoPathList = pathList;   //Remove
+                gizmoCloseList = closeList; //Remove
+                foreach (NodePos v in closeList){
+                    grid[v.x, v.y].Check = false;
                 }
+                foreach (NodePos n in openList){
+                    grid[n.x, n.y].Check = false;
+                }
+                openList.Clear();
+                return (pathList);
+            }
+            pathList.Add(grid[nodeToAdd.x, nodeToAdd.y].nodeWorldPos);
+            nodeToAdd = new NodePos(grid[nodeToAdd.x, nodeToAdd.y].parentNodeX, grid[nodeToAdd.x, nodeToAdd.y].parentNodeY);
+        }
+        return (new List&lt;Vector3&gt;());
+    }
+</code><p></p></pre><pre style="
+    padding-left: 10px;
+    padding-top: 20px;
+"><h3>Grid</h3>This is part of the Grid class this creates the grid used.<code>	void Awake(){
+        CreatGrid();
+	}
+
+    //Creating the grid
+    void CreatGrid() {
+        Pathfinder = this;
+        grid = new Node[gridSizeX, gridSizeY];
+        for(int x = 0; x &lt; gridSizeX; x++){
+            for(int y = 0; y &lt; gridSizeY; y++){
+                Vector3 newNodePos = new Vector3(transform.position.x + (x * nodeSize) + nodeSize / 2,0, transform.position.z + (y * nodeSize) + nodeSize / 2);
+                grid[x, y] = new Node(newNodePos, !Physics.CheckSphere(newNodePos, nodeSize / 2,2) ,x,y);
             }
         }
     }
-</code><p></p></pre><a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Gates%20Of%20Glory" class="icon fa-Github" style="
+</code><p></p></pre><a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Pathfinding" class="icon fa-Github" style="
     right: 250px;
     left: 45%;
     top: 50px;
@@ -243,4 +232,4 @@ s<nav id="menu">
 					<li><a href="generic.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Generic</a></li>
 					<li><a href="elements.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Elements</a></li>
 				</ul>
-			<a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a></nav></body></html>
+			<a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a></nav></body></html>

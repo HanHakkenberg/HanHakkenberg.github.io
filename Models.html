@@ -18,8 +18,8 @@
 			<section id="One" class="wrapper style3">
 				<div class="inner">
 					<header class="align-center">
-						<p>Made in 2017</p>
-						<h2>Gates Of Glory</h2>
+						<p>Made in 3DS Max</p>
+						<h2>Models</h2>
 					</header>
 				</div>
 			</section>
@@ -42,187 +42,194 @@
     padding-left: 10px;
 ">
 						
-					<a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Gates%20Of%20Glory" class="icon fa-Github" style="
-    right: 250px;
-    left: 45%;
-    top: 25px;
-    padding-bottom: 75px;
-">. Project Link<span class="label">Github</span><h2 style="
-    width: 0px;
-    margin-bottom: 0px;
-    padding-right: 10px;
-"></h2></a><p style="
-    padding-top: 75px;
+					<p style="
+    padding-top: 25px;
 "><span class="image left" style="
     top: 40px;
     margin-bottom: 50px;
-"><img src="images/Slide02.jpg" alt="" style="
+"><img src="images/slide05.jpg" alt="" style="
     width: 350px;
-"></span></p><h3>The Game</h3>Gates Of Glory is a castle defense game in which you have to defend against waves. These waves are endless and keep getting harder every wave. After certain waves there will be men enemies introduces these will have different stats. You can also place traps which will slow down enemies or damage them. The enemies will try to get to the throne in the middle they will first have to pass a gate. The gate can be open by the player or be broken. After the gate the enemy will have to take all the gold before breaking the throne this can create interesting end game tactics. You as player can also make rooms that can help you there is a minion room to spawn your allies a healing room to heal your allies a damage room to damage the enemies and a barrage room to do lots of damage in 
-a specific part of that map. The Ontario will collect data so you can see how match you have made spend etc. And the generator will heal the health of your gate over time.<p></p>
+"></span></p><h3>Introduction</h3>All models on this page are made to be game ready. They are all made in 3DS Max and textured in Substance Painter. I would like to be a programmer but I have no problem with making 3D models now and then. The models have been optimized and the scaling has been set to a their real world counter part. Disclaimer I only have basic Substance and lighting knowledge.<p></p>
 <p style="
     padding-left: 10px;
     padding-top: 20px;
+"></p><p></p>
+<p style="
+    padding-left: 10px;
+    padding-top: 0px;
+    margin-bottom: 100px;
+    border-top-width: 50px;
 "><span class="image right" style="
-    top: 25px;
-"><img src="images/Gates of Glory/GOG_012.jpg" alt=""></span></p><h3>My Contribution</h3>The project was made in 10 weeks by two developers and two artists. I was responsible for the AI, Wave system and the gate and throne. The enemies each have have their own speed that gets randomized slightly when they spawn to create variation. The height and pitch for the audio of the battle cry is randomized slightly. The enemies and allies use collision to detect if they are in reach of an enemy or gate. The gate can be closed and opened at will unless it's broken in that case it will stay open. Your allies will attack the enemy closest to the throne if there are no enemies or all enemies already hit their cap of how many allies they can fight at once the ally will go to the outside of the closest gate to wait for new enemies.<p></p>
+    top: 28px;
+    left: -50;
+"><img src="images\Models\Screenshot (50).jpg" alt="" style="
+    width: 450px;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
+"><img src="images\Models\Screenshot (49).jpg" alt="" style="
+    width: 450px;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
+    margin-bottom: 0px;
+"><img src="images\Models\Screenshot (39).jpg" alt="" style="
+    width: 450px;
+"></span></p><h3 style="
+    margin-top: 125px;
+">Wall Clock</h3><p style="
+    width: 350px;
+">This is the wall clock. The model consists of three textures one for the glass since it's one color and transparent. A texture for the clock hands and the pendulum I also did this because it's transparent. And a texture for the base clock housing. The model is made in 3DS Max and textured in Substance Painter. The model has a high poly baked into it and is optimized and game ready. The scaling is based on real life counter parts and the pivits are placed ad positions that make animating of the hands and pendulum easy.
+
+</p><p></p><p></p><p></p>
+
+
 <p style="
     padding-left: 10px;
-    padding-top: 75px;
-    padding-bottom: 50px;
-"></p><h3>What would I do different?</h3>What I would do differently:  I would use inheritress properly. I would change the way the soldiers currently detect where they have to go. I would make it so based on its position it could see if it falls in the areas meet for a damageable. This also lessons the need for codependent sense the damageable data and location can be stored in a singleton. I would also make the enemies walk along 3 or more strait paths instead of using pathfinder this would make it less demanding.<p></p><pre style="
+    padding-top: 0px;
     margin-bottom: 0px;
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Damagebles</h3>This is from the damagebles Class This is the base class for all the damageble thing like the enemies allies but also the gates and the throne.<code>    public Stats myStats;
-
-    public virtual void TakeDamage(float damage){
-        myStats.health.currentValue -= damage;
-    }
-</code><p></p>
-</pre>
-
-<pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Soldier</h3>This is from the Soldier Class This class holds the bases for the movement of the AI. Movement is done using the unity navmesh.<code>    public NavMeshAgent agent;
-    public float attackCooldown;
-    public Transform targetTransform;
-    public Animator anim;
-    public bool inFight;
-    public AudioSource myAudiosource;
-
-    void Start() {
-        MyStart();
-    }
-
-    public virtual void MyStart() {
-        if(agent != null) {
-            agent.speed = Random.Range(1.75f, 2.25f);
-        }
-        myAudiosource.pitch = Random.Range(0.75f, 1.25f);
-        myAudiosource.volume = Random.Range(0.01f, 0.08f);
-        transform.localScale *= Random.Range(0.9f, 1.1f);
-    }
-
-    public override void TakeDamage(float damage) {
-    }
-</code><p></p></pre><pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Knight</h3>This is part of the class used for the knight later we desided to at a roman like soldier this enemy uses this script aswell.<code>    void OnTriggerEnter(Collider other)
-    {
-        if(targetTransform != null &amp;&amp; targetTransform == other.transform) {
-            targetTransform.gameObject.GetComponent&lt;Enemy&gt;().StartBattle(this);
-            anim.SetBool("Attack", true);
-            anim.SetBool("Idle", false);
-            inFight = true;
-            agent.isStopped = true;
-            StopAllCoroutines();
-            StartCoroutine(Attack());
-        }
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform == targetTransform)
-        {
-            agent.isStopped = true;
-            if(transform.position.x &gt; 0) {
-                transform.localEulerAngles = new Vector3(0,90,0);
-            }
-            else {
-                transform.localEulerAngles = new Vector3(0, -90, 0);
-            }
-            anim.SetBool("Idle", true);
-        }
-    }
-</code><p></p></pre><pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Enemy Knight</h3>This is part of the class used for the Enemyknight.<code>    public override void TakeDamage(float damage) {
-        myStats.health.currentValue -= damage;
-
-        if(myStats.health.currentValue &lt;= 0) {
-            StopAllCoroutines();
-            ObjectPooler.instance.AddToPool("Enemy Knight", gameObject);
-            ResourceManager.instance.AddGold(ResourceManager.instance.normalEnemyGoldReward);
-        }
-    }
-
-    void OnCollisionEnter(Collision collision) {
-        if(collision.transform == targetTransform) {
-            StartBattle(target);
-            if(targetTransform.tag == "Defense") {
-                targetTransform.GetComponent&lt;CastleDeffensePoint&gt;().attackingMe.Add(this);
-            }
-            agent.isStopped = true;
-            attackingCastle = true;
-            target = collision.gameObject.GetComponent&lt;Damagebles&gt;();
-        }
-    }
-
-    void OnTriggerExit(Collider other) {
-        if(targetTransform != null &amp;&amp; targetTransform.gameObject.activeSelf == false) {
-            targetTransform = null;
-            StopBattle();
-            FindNewTarget();
-        }
-    }
-</code><p></p></pre><pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Gate</h3>This is part of the class used for the Gate.<code>    public virtual void DirectDamage(float damage) {
-        TakeDamage(damage);
-    }
-
-    public override void TakeDamage(float damage){
-        myStats.health.currentValue -= damage;
-
-        if (healthbarFill != null)
-        {
-            healthbarFill.fillAmount = (myStats.health.currentValue / myStats.health.baseValue);
-        }
-    }
-</code><p></p></pre><pre style="
-    padding-left: 10px;
-    padding-top: 20px;
-"><h3>Throne</h3>This is part of the class used for the Throne.<code>    public override void TakeDamage(float damage) {
-        if(ResourceManager.instance.goldPrefabsInScene.Count &gt; 0) {
-            ResourceManager.instance.RemoveGold(1, false);
-        }
-        else {
-            damage = Mathf.Abs(ResourceManager.instance.goldPrefabsInScene.Count - Mathf.RoundToInt(damage / 10));
-            ResourceManager.instance.RemoveGold(ResourceManager.instance.goldPrefabsInScene.Count, false);
-            myStats.health.currentValue -= damage;
-            myStats.health.currentValue -= damage;
-            HPBar();
-
-            if(healthbarFill != null) {
-                healthbarFill.fillAmount = (myStats.health.currentValue / myStats.health.baseValue);
-
-                if(secondThroneHealthBarFill != null) {
-                    secondThroneHealthBarFill.fillAmount = (myStats.health.currentValue / myStats.health.baseValue);
-                }
-            }
-
-            if(myStats.health.currentValue &lt;= 0) {
-                if(GameManager.instance.gameState == GameManager.GameState.Playing) {
-                    StartCoroutine(UIManager.instance.GameOver());
-                }
-            }
-        }
-    }
-</code><p></p></pre><a href="https://github.com/HanHakkenberg/Portfolio/tree/master/Gates%20Of%20Glory" class="icon fa-Github" style="
-    right: 250px;
-    left: 45%;
-    top: 50px;
-">. Project Link<span class="label">Github</span><h2 style="
-    width: 0px;
+    border-top-width: 50px;
+    margin-top: 500px;
+"><span class="image right" style="
+    top: 28px;
+    left: -50;
+"><img src="images\Models\Screenshot (47).jpg" alt="" style="
+    width: 450px;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
+"><img src="images\Models\Screenshot (48).jpg" alt="" style="
+    width: 450px;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
     margin-bottom: 0px;
-    padding-right: 10px;
-"></h2></a>
-</div>
+"><img src="images\Models\Screenshot (46).jpg" alt="" style="
+    width: 450px;
+    padding-left: 75px;
+"></span></p><h3 style="
+    margin-top: 125px;
+">Closet</h3><p style="
+    width: 350px;
+">This is the Closet. The model consists of two textures. The first texture is for the doors and the drawer This is so they can move this makes it so the base of the closet can be static. The doors and drawer can be batched dynamical because they have less than 300 tries. The model is made in 3DS Max and textured in Substance Painter. The model has a high poly baked into it and is optimized and game ready. The scaling is based on real life counter parts and the pivits are placed at positions that make animating of the doors and the drawer easy.</p><p></p><p style="
+    padding-left: 10px;
+    padding-top: 0px;
+    margin-bottom: 100px;
+    border-top-width: 50px;
+    margin-top: 300px;
+"><span class="image right" style="
+    top: 28px;
+    left: -50;
+"><img src="images\Models\Screenshot (54).jpg" alt="" style="
+    width: 450px;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
+"><img src="images\Models\Screenshot (53).jpg" alt="" style="
+    width: 450px;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
+    margin-bottom: 0px;
+"><img src="images\Models\Screenshot (51).jpg" alt="" style="
+    width: 450px;
+"></span></p><h3 style="
+    margin-top: 125px;
+">Chair</h3><p style="
+    width: 350px;
+">This is the wall clock. The model cosists of one textures for the chair. The model is made in 3DS Max and textured in Substance Painter. The model has a high poly baked into it and is optimized and game ready. The scaling is based on real life counter parts.</p><p></p><p style="
+    padding-left: 10px;
+    padding-top: 0px;
+    margin-bottom: 100px;
+    border-top-width: 50px;
+    margin-top: 450px;
+"><span class="image right" style="
+    top: 28px;
+    left: -50;
+"><img src="images\Models\Screenshot (61).jpg" alt="" style="
+    width: 450px;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
+"><img src="images\Models\Screenshot (55).jpg" alt="" style="
+    width: 450px;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
+    margin-bottom: 0px;
+"><img src="images\Models\Screenshot (57).jpg" alt="" style="
+    width: 450px;
+"></span></p><h3 style="
+    margin-top: 125px;
+">Old Pot</h3><p style="
+    width: 350px;
+">This is the Old pot. The model cosists of one textures for the pot. The model is made using Agisoft Photoscan and 3DS Max. The model has a high poly baked into a low poly and is optimized and game ready.</p><p></p><p style="
+    padding-left: 10px;
+    padding-top: 0px;
+    margin-bottom: 100px;
+    border-top-width: 50px;
+    margin-top: 450px;
+"><span class="image right" style="
+    top: 28px;
+    left: -50;
+"><img src="images\Models\Screenshot (65).jpg" alt="" style="
+    width: 400px;
+    height: 600px;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
+"><img src="images\Models\Screenshot (64).jpg" alt="" style="
+    width: 450px;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
+    margin-bottom: 0px;
+"><img src="images\Models\Screenshot (62).jpg" alt="" style="
+    width: 450px;
+"></span></p><h3 style="
+    margin-top: 125px;
+">Statue</h3><p style="
+    width: 350px;
+">This is the Statue. The model cosists of one textures for the Statue. The model is made using Agisoft Photoscan and 3DS Max. The model has a high poly baked into a low poly and is optimized and game ready.</p><p></p><p style="
+    padding-left: 10px;
+    padding-top: 0px;
+    margin-bottom: 100px;
+    border-top-width: 50px;
+    margin-top: 500px;
+"><span class="image right" style="
+    top: 28px;
+    left: -50;
+"><img src="images\Models\Screenshot (67).jpg" alt="" style="
+    width: 450px;
+    height: 269.594x;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
+"><img src="images\Models\Screenshot (66).jpg" alt="" style="
+    width: 450px;
+"></span><span class="image right" style="
+    top: 28px;
+    width: 500px;
+    height: 400px;
+    margin-bottom: 0px;
+"><img src="images\Models\Screenshot (68).jpg" alt="" style="
+    width: 450px;
+"></span></p><h3 style="
+    margin-top: 125px;
+">Hat</h3><p style="
+    width: 350px;
+">This is the Hat. The model cosists of one textures for the Hat. The model is made using Agisoft Photoscan and 3DS Max. The model has a high poly baked into a low poly and is optimized and game ready.</p><p></p></div>
 				</div>
 			</section>
 
@@ -243,4 +250,4 @@ s<nav id="menu">
 					<li><a href="generic.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Generic</a></li>
 					<li><a href="elements.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Elements</a></li>
 				</ul>
-			<a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a></nav></body></html>
+			<a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a><a href="#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a></nav></body></html>
